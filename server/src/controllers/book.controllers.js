@@ -34,12 +34,12 @@ const getBooks = async (req, res) => {
       q.title = { $regex: title };
     }
     if (page) {
-      s = 2 * (page - 1);
+      s = 10 * (page - 1);
     } else {
       s = 0;
     }
     console.log(q);
-    const books = await Book.find(q).skip(s).limit(2);
+    const books = await Book.find(q).skip(s).limit(10);
     if (books && books.length) {
       res
         .status(200)
