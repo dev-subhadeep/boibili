@@ -23,8 +23,18 @@ const createBook = async (req, res) => {
 };
 
 const getBooks = async (req, res) => {
+  const { author, title } = req.query;
+
   try {
-    const books = await Book.find();
+    let q = {};
+    if (author) {
+      q.author = { $regex: author };
+    }
+    if (title) {
+      q.title = { $regex: title };
+    }
+    console.log(q);
+    const books = await Book.find(q);
     if (books && books.length) {
       res
         .status(200)
