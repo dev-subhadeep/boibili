@@ -1,14 +1,22 @@
 const Book = require("../models/book.model.js");
+const { isValidISBN } = require("../utils/validation.js");
 
 const createBook = async (req, res) => {
-  const { title, author, isbn, description, published_date } = req.body;
+  const { title, author, isbn, description, publish_date } = req.body;
+  if (!Date.parse(publish_date)) {
+    return res.status(400).json({ error: "Invalid date format" });
+  }
+
+  if (!isValidISBN(isbn)) {
+    return res.status(400).json({ error: "Invalid ISBN format" });
+  }
   try {
     const book = await Book.create({
       title,
       author,
       isbn,
       description,
-      published_date,
+      publish_date,
     });
 
     if (book) {
