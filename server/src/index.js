@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bookRouter = require("./routes/book.routes.js");
+const userRouter = require("./routes/user.routes.js");
 const cors = require("cors");
 const connect = require("./utils/connect.js");
 
@@ -13,6 +14,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/v1/books", bookRouter);
+app.use("/api/v1/user", userRouter);
 
 app.listen(8080, async (req, res) => {
   try {
