@@ -1,6 +1,7 @@
 const User = require("../models/user.model.js");
-
-const bcrypt = require("bcrypt"); // Import bcrypt for password hashing
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const { jwtpk } = require("../utils/constants.js");
 
 const createUser = async (req, res) => {
   const { username, password } = req.body;
@@ -36,7 +37,30 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const existingUser = await User.findOne({ username });
+    if (!existingUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const match = await bcrypt.compare(password, existingUser.password);
+    if (match) {
+      const token = jwt.sign({ userId: existingUser._id }, jwtpk, {
+        expiresIn: "7d",
+      });
+      return res.status(200).json({ message: "Logged in successfully", token });
+    } else {
+      return res.status(400).json({ error: "Invalid password" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: `${error.message}` });
+  }
+};
+
 module.exports = {
   createUser,
   deleteUser,
+  loginUser,
 };
