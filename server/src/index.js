@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bookRouter = require("./routes/book.routes.js");
+const userRouter = require("./routes/user.routes.js");
 const cors = require("cors");
 const connect = require("./utils/connect.js");
 
@@ -13,12 +14,13 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/v1/books", bookRouter);
+app.use("/api/v1/user", userRouter);
 
-app.listen(8080, async (req, res) => {
+app.listen(process.env.PORT, async (req, res) => {
   try {
     await connect;
     console.log("DB connected");
-    console.log("Running on port 8080");
+    console.log(`Running on port ${process.env.PORT}`);
   } catch (error) {
     console.log(error);
   }

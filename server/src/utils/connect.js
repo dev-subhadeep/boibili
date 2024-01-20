@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-require("dotenv").config();
+const { dburi, dbname } = require("./constants.js");
 
-const connect = mongoose.connect(process.env.DB_URI);
+const connect = mongoose.connect(`${dburi}/${dbname}`);
 
 module.exports = connect;
