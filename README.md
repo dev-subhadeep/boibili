@@ -39,7 +39,7 @@ npm start
 
 ## API Endpoings
 
-==All of these need to be preceded by==
+> All of these need to be preceded by
 
 ```
 /api/v1
@@ -47,7 +47,7 @@ npm start
 
 ### Register a user
 
-POST request with "username" && "password" as JSON data to
+POST request with `username` and `password` as JSON data to
 
 ```
 /user/
@@ -55,9 +55,11 @@ POST request with "username" && "password" as JSON data to
 
 ### Login a user
 
-GET request with "username" && "password" as JSON data to
+GET request with `username` and `password` as JSON data to
 
 ```
+> Note: This will provide a token that you need to add as header under Authorisation as Bearer token
+
 /user/
 ```
 
@@ -77,7 +79,7 @@ Each page gives you 10 books. To get the next 10 use the page parameter
 
 ### Getting the data of a single book
 
-POST request to
+GET request to
 
 ```
 /books/<id-of-the-book>
@@ -91,7 +93,7 @@ POST request to
 /books/
 ```
 
-==Required fields: title, author, isbn, description, publish_date==
+> Required fields: `title`, `author`, `isbn`, `description`, `publish_date`
 
 ### Updating a book (must be logged in)
 
@@ -108,3 +110,5 @@ DELETE request to
 ```
 /books/<id-of-the-book>
 ```
+
+> ### All updates will be pushed to v2 branch hence forward
