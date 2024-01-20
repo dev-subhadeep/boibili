@@ -15,6 +15,14 @@ const bookSchema = new mongoose.Schema({
   },
   description: String,
   publish_date: Date,
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+  donor: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Book = mongoose.model("Book", bookSchema);
