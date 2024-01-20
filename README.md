@@ -58,10 +58,10 @@ POST request with `username` and `password` as JSON data to
 GET request with `username` and `password` as JSON data to
 
 ```
-> Note: This will provide a token that you need to add as header under Authorisation as Bearer token
-
 /user/
 ```
+
+> Note: This will provide a token that you need to add as header under Authorisation as Bearer token
 
 ### Getting a list of books (publicly accessible)
 
@@ -111,4 +111,4 @@ DELETE request to
 /books/<id-of-the-book>
 ```
 
-> ### All updates will be pushed to v2 branch hence forward
+## All updates will be pushed to v2 branch hence forward
