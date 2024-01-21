@@ -19,6 +19,11 @@ const bookSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  condition: {
+    type: String,
+    enums: ["NEW", "OK", "DOG-EARED"],
+    required: [true, "Condition of book needs to be mentioned"],
+  },
   donor: {
     type: Schema.Types.ObjectId,
     ref: "User",
