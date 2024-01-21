@@ -4,10 +4,12 @@ const bookRouter = require("./routes/book.routes.js");
 const userRouter = require("./routes/user.routes.js");
 const cors = require("cors");
 const connect = require("./utils/connect.js");
+const cookieParser = require("cookie-parser");
 
-//app.use(cors());
+app.use(cors());
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/health", (req, res) => {
   res.status(200).send("Health: 100%");

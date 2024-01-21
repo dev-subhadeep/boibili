@@ -1,7 +1,7 @@
 const User = require("../models/user.model.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { jwtpk } = require("../utils/constants.js");
+const { jwtpk, cookieOptions } = require("../utils/constants.js");
 
 const createUser = async (req, res) => {
   const { username, password } = req.body;
@@ -49,7 +49,10 @@ const loginUser = async (req, res) => {
       const token = jwt.sign({ userId: existingUser._id }, jwtpk, {
         expiresIn: "7d",
       });
-      return res.status(200).json({ message: "Logged in successfully", token });
+      return res
+        .status(200)
+        .cookie("token", token, cookieOptions)
+        .json({ message: "Logged in successfully", token });
     } else {
       return res.status(400).json({ error: "Invalid password" });
     }
