@@ -5,11 +5,13 @@ const {
   deleteUser,
   loginUser,
   logoutUser,
+  validateUser,
 } = require("../controllers/user.controller.js");
 
 userRouter.post("/", createUser);
 userRouter.delete("/", deleteUser);
-userRouter.get("/", loginUser);
+userRouter.post("/login", loginUser);
 userRouter.get("/logout", logoutUser);
+userRouter.get("/validate", validateUser);
 
 module.exports = userRouter;

@@ -77,9 +77,25 @@ const logoutUser = async (req, res) => {
   }
 };
 
+const validateUser = async (req, res) => {
+  try {
+    const token = req.cookies.token || null;
+    if (token) {
+      const data = await jwt.verify(token, jwtpk);
+      if (data) {
+        res.status(200).json({ success: true, token });
+      }
+    }
+    res.status(401).json({ success: false });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong." });
+  }
+};
+
 module.exports = {
   createUser,
   deleteUser,
   loginUser,
   logoutUser,
+  validateUser,
 };

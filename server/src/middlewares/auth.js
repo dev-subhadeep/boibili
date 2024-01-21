@@ -2,7 +2,8 @@ const { jwtpk } = require("../utils/constants.js");
 const jwt = require("jsonwebtoken");
 
 const auth = async (req, res, next) => {
-  const token = req.headers.authorization?.split("Bearer ")[1] || null;
+  const token =
+    req.cookies.token || req.headers.authorization?.split("Bearer ")[1] || null;
   try {
     if (token) {
       console.log(token);
