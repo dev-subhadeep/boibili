@@ -81,7 +81,13 @@ const getBook = async (req, res) => {
 const updateBook = async (req, res) => {
   const { _id } = req.params;
   const { title, author, isbn, condition } = req.body;
+  const { userId } = req.user;
   try {
+    const book = await Book.findOne({ _id });
+    if (book.donor !== userId) {
+      return res.status(403).json({ error: "Access forbidden" });
+    }
+
     const updatedBook = await Book.findByIdAndUpdate(_id, {
       title,
       author,
@@ -102,7 +108,12 @@ const deleteBook = async (req, res) => {
   const { _id } = req.params;
   const { userId } = req.user;
   try {
+    const book = await Book.findOne({ _id });
+    if (book.donor !== userId) {
+      return res.status(403).json({ error: "Access forbidden" });
+    }
     const deletedBook = await Book.findByIdAndDelete(_id);
+
     if (deletedBook) {
       res.status(200).json({ message: "Book deleted successfully" });
     } else {
