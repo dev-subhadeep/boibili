@@ -8,7 +8,12 @@ const auth = async (req, res, next) => {
       console.log(token);
       const data = await jwt.verify(token, jwtpk);
       if (data) {
-        req.body.userId = data.userId;
+        const user = await User.findOne({ _id: userId });
+        if (!user.verified)
+          return res
+            .status(403)
+            .json({ error: "You must be verified to proceed." });
+        req.user = data;
         return next();
       }
     }

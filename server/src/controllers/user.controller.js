@@ -46,9 +46,13 @@ const loginUser = async (req, res) => {
     }
     const match = await bcrypt.compare(password, existingUser.password);
     if (match) {
-      const token = jwt.sign({ userId: existingUser._id }, jwtpk, {
-        expiresIn: "7d",
-      });
+      const token = jwt.sign(
+        { userId: existingUser._id, role: existingUser.role },
+        jwtpk,
+        {
+          expiresIn: "7d",
+        },
+      );
       return res
         .status(200)
         .cookie("token", token, cookieOptions)

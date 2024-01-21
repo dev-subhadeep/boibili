@@ -2,7 +2,9 @@ const Book = require("../models/book.model.js");
 const { isValidISBN } = require("../utils/validation.js");
 
 const createBook = async (req, res) => {
-  const { title, author, isbn, description, publish_date } = req.body;
+  const { title, author, isbn, description, publish_date, condition } =
+    req.body;
+  const { userId } = req.user;
   if (!Date.parse(publish_date)) {
     return res.status(400).json({ error: "Invalid date format" });
   }
@@ -17,6 +19,8 @@ const createBook = async (req, res) => {
       isbn,
       description,
       publish_date,
+      condition,
+      donor: userId,
     });
 
     if (book) {
@@ -76,8 +80,14 @@ const getBook = async (req, res) => {
 
 const updateBook = async (req, res) => {
   const { _id } = req.params;
+  const { title, author, isbn, condition } = req.body;
   try {
-    const updatedBook = await Book.findByIdAndUpdate(_id, { ...req.body });
+    const updatedBook = await Book.findByIdAndUpdate(_id, {
+      title,
+      author,
+      isbn,
+      condition,
+    });
     if (updatedBook) {
       res.status(200).json({ message: "Book updated successfully" });
     } else {
@@ -90,6 +100,7 @@ const updateBook = async (req, res) => {
 
 const deleteBook = async (req, res) => {
   const { _id } = req.params;
+  const { userId } = req.user;
   try {
     const deletedBook = await Book.findByIdAndDelete(_id);
     if (deletedBook) {
