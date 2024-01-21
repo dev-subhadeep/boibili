@@ -25,7 +25,7 @@ const bookSchema = new mongoose.Schema({
     required: [true, "Condition of book needs to be mentioned"],
   },
   donor: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
 });
