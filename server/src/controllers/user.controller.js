@@ -62,8 +62,20 @@ const loginUser = async (req, res) => {
   }
 };
 
+const logoutUser = async (req, res) => {
+  try {
+    res
+      .status(200)
+      .clearCookie("token", cookieOptions)
+      .json({ message: "Logged out successfully." });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 module.exports = {
   createUser,
   deleteUser,
   loginUser,
+  logoutUser,
 };
