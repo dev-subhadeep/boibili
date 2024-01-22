@@ -83,10 +83,10 @@ const validateUser = async (req, res) => {
     if (token) {
       const data = await jwt.verify(token, jwtpk);
       if (data) {
-        res.status(200).json({ success: true, token });
+        return res.status(200).json({ success: true });
       }
     }
-    res.status(401).json({ success: false });
+    return res.status(401).json({ success: false });
   } catch (error) {
     res.status(500).json({ error: "Something went wrong." });
   }
